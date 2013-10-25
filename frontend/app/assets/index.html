@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+    <script src="../geo.js"></script>
 
     <title>Theme Template for Bootstrap</title>
 
@@ -69,15 +70,15 @@
                     <form class="navbar-form navbar-right" role="search">
                         <label> Startuje z: </label>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Wpisz swoją aktualizację">
+                            <input type="text" id="location-a" class="form-control" placeholder="Wpisz swoją aktualizację">
                         </div>
-                        <button type="submit" class="btn btn-default" title="Wstaw startową lokalizacje z GPS"><span class="glyphicon glyphicon-globe"></span></button>
+                        <button type="button" onclick="javascript:showLocationA()" class="btn btn-default" title="Wstaw startową lokalizacje z GPS"><span class="glyphicon glyphicon-globe"></span></button>
 
                         <label> Kończe w : </label>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Wpisz swoją aktualizację">
+                            <input type="text" id="location-b" class="form-control" placeholder="Wpisz swoją aktualizację">
                         </div>
-                        <button type="submit" class="btn btn-default" title="Wstaw startową lokalizacje z GPS"><span class="glyphicon glyphicon-globe"></span></button>
+                        <button type="button" onclick="javascript:showLocationB()" class="btn btn-default" title="Wstaw startową lokalizacje z GPS"><span class="glyphicon glyphicon-globe"></span></button>
 
                         <button type="submit" class="btn btn-default">Szukaj</button>
                     </form>
