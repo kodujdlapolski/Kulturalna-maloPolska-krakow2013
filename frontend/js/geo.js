@@ -39,10 +39,10 @@ var geo = function () {
 			});
 			return defer.promise;
 		},
-		getLocation = function () {
+		getLocation = function (address) {
+		    debugger;
 			var defer = Q.defer();
 			
-			var address = document.getElementById('location-a').value;
 			geocoder.geocode({ 'address': address }, function (results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					defer.resolve(results[0].geometry.location);

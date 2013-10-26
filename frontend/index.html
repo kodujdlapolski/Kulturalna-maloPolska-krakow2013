@@ -61,12 +61,17 @@
                     <form class="navbar-form navbar-right" role="search">
                         <label> Startuje z: </label>
                         <div class="form-group">
-                            <input type="text" id="location-a" class="form-control" placeholder="Wpisz swoją lokalizację">
+                            <input type="text" id="location-a" class="form-control"
+                                   data-bind="value:address" 
+                                    placeholder="Wpisz swoją lokalizację">
                         </div>
-                        <button type="button" data-bind="click:setStart" class="btn btn-default" title="Wstaw startową lokalizacje z GPS"><span class="glyphicon glyphicon-globe"></span></button>
+                        <button type="button" data-bind="click:setStart" class="btn btn-default"
+                                title="Wstaw startową lokalizacje z GPS">
+                            <span class="glyphicon glyphicon-globe"></span>
+                        </button>
                         <label> W promieniu: </label>
                         <div class="form-group ">
-                                <input type="text" class="form-control" placeholder="km">
+                                <input type="text" class="form-control" data-bind="value:radius" placeholder="km">
                         </div>
                         <button type="submit" data-bind="click:search" class="btn btn-default">Szukaj</button>
                     </form>
@@ -93,6 +98,8 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
     <script src="js/q.js"></script>
     <script src="js/map.js"></script>
     <script src="js/geo.js"></script>
@@ -115,27 +122,37 @@
         function SearchViewModel(gMap, geo) {
             this.firstName = "Bert";
             this.lastName = "Bertington";
+            this.address = ko.observable();
+            this.radius = ko.observable(10);
             this.startLocalization = ko.observable();
             this.setStart = function (v) {
                 this.startLocalization(geo.showLocation());
             }
 
             this.search = function () {
-				var location;
-				geo.getLocation().then(function (data) {
-					location = data;
-					alert(location);
+                var self = this;
+                self.address(document.getElementById('location-a').value);
+                debugger;
+                geo.getLocation(self.address())
+                    .then(function (location) {					
+
+					    $.ajax({
+					        url: 'data.json',
+					        dataType: 'json'
+					    }).done(function (data) {
+					        debugger;
+					        gMap.setMarkers(data);
+					        gMap.setRadius(location, self.radius());
+
+					}).always(function (d) { console.log(d); });
+
+
+
 				});
 					
 				
 					
-                $.ajax({
-                    url: 'data.json',
-                    dataType: 'json'
-                }).done(function (data) {
-                    gMap.setMarkers(data);
-
-                }).always(function (d) { console.log(d); });
+             
 
 				
                 //do ajax request,
