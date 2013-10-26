@@ -111,6 +111,13 @@ ALTER TABLE ONLY monuments
 
 
 --
+-- Name: index_on_monuments_location; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_on_monuments_location ON monuments USING gist (st_geographyfromtext((((('SRID=4326;POINT('::text || lng) || ' '::text) || lat) || ')'::text)));
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -126,3 +133,5 @@ SET search_path TO "$user",public;
 INSERT INTO schema_migrations (version) VALUES ('20131025224958');
 
 INSERT INTO schema_migrations (version) VALUES ('20131026002903');
+
+INSERT INTO schema_migrations (version) VALUES ('20131026103319');
