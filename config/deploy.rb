@@ -35,6 +35,16 @@ namespace :deploy do
     end
   end
 
+  after :updating, 'frontend:compile'
   after :finishing, 'deploy:cleanup'
 
+end
+
+namespace :frontend do
+  task :compile do
+    on roles(:all) do |h|
+      execute "cd #{release_path}/frontend; npm install ; brunch build"
+      execute "ln -s #{release_path}/frontend/public #{release_path}/public"
+    end
+  end
 end
