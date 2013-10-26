@@ -90,7 +90,7 @@ var googleMap = function (q,_) {
         setMarkersWithPolylines: setMarkersWithPolylines,
         init: init
     }
-}(Q,_);
+}(Q, _);
 
 
 
