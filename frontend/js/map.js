@@ -2,8 +2,8 @@ var googleMap = function (q,_) {
     var map,
         markers,
         circle,
-        clearMarkers = function () {
-            _.each(this.markers, function (m) {
+        clearMarkers = function (markers) {
+            _.each(markers, function (m) {
                 m.setMap(null)
             });
         },
@@ -44,7 +44,7 @@ var googleMap = function (q,_) {
 
         },
         setMarkers = function (locations) {
-            clearMarkers();
+            clearMarkers(this.markers);
             this.markers = [];
             var self = this;
 
