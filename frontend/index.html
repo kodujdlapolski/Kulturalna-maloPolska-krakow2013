@@ -134,18 +134,18 @@ Daj się namierzyć albo napisz, gdzie jestes, żeby zobaczyć, co Małopolska m
             this.search = function () {
                 var self = this;
                 self.address(document.getElementById('location-a').value);
-                debugger;
+
                 geo.getLocation(self.address())
                     .then(function (location) {					
 
 					    $.ajax({
 					      //  url: 'data.json',
-					     url: '/api/v1/monuments/?lat=' + location.lb + '&lng=' + location.mb + '&range=' + self.radius(),
+					     url: '/api/v1/monuments/?lat=' + location.lb + '&lng=' + location.mb + '&range=' + (self.radius()*1000),
 
 					        dataType: 'json',
 					       
 					    }).done(function (data) {
-					        debugger;
+					        
 					        gMap.setMarkers(data);
 					        gMap.setRadius(location, self.radius());
 
