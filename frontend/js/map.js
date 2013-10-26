@@ -3,7 +3,7 @@ var googleMap = function (q,_) {
         markers,
         circle,
         clearMarkers = function () {
-            _.each(markers, function (m) {
+            _.each(this.markers, function (m) {
                 m.setMap(null)
             });
         },
@@ -40,6 +40,8 @@ var googleMap = function (q,_) {
                 radius: parseInt(radius, 10) * km
             };
             this.circle = new google.maps.Circle(circleOptions);
+            map.setCenter(center);
+
         },
         setMarkers = function (locations) {
             clearMarkers();
