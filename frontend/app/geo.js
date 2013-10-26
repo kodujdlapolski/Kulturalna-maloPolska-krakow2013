@@ -10,40 +10,35 @@ var geo = function () {
             geocoder = new google.maps.Geocoder();
 
         },
-    callback = function (position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude
-        codeLatLng(lat, lng).then(function (data) {
-            document.getElementById('location-a').value = data;
-        });
-        map.setZoom(14);
-        map.setCenter(new google.maps.LatLng(lat, lng));
+		callback = function (position) {
+			var lat = position.coords.latitude;
+			var lng = position.coords.longitude
+			codeLatLng(lat, lng).then(function (data) {
+				document.getElementById('location-a').value = data;
+			});
+			map.setZoom(14);
+			map.setCenter(new google.maps.LatLng(lat, lng));
+		},
+		codeLatLng = function (lat, lng) {
+			var latlng = new google.maps.LatLng(lat, lng);
+			var defer = Q.defer();
 
-    }
-
-,
-codeLatLng = function (lat, lng) {
-    var address = "test";
-    var latlng = new google.maps.LatLng(lat, lng);
-    var defer = Q.defer();
-
-    geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            console.log(results)
-            if (results[1]) {
-                defer.resolve(results[0].formatted_address)
-            }
-            else {
-                alert("No results found");
-            }
-        }
-        else {
-            alert("Geocoder failed due to: " + status);
-        }
-    });
-
-    return defer.promise;
-}
+			geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					console.log(results)
+					if (results[1]) {
+						defer.resolve(results[0].formatted_address)
+					}
+					else {
+						alert("Nie znaleziono pasującego adresu.");
+					}
+				}
+				else {
+					alert("Geolokalizacja nieudana z powodu: " + status);
+				}
+			});
+			return defer.promise;
+		}
 
     return {
         showLocation: showLocation,
