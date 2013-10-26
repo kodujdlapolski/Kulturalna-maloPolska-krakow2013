@@ -27,7 +27,7 @@ var googleMap = function (q,_) {
         },
         setRadius = function (center, radius) {
             if (this.circle != undefined) this.circle.setMap(null);
-            var km = 100;
+            var km = 1000;
             var center = new google.maps.LatLng(center.lb, center.mb);
             var circleOptions = {
                 strokeColor: '#FF0000',
