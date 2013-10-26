@@ -13,7 +13,6 @@ set :scm, :git
 # set :linked_files, %w{config/database.yml}
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-set :default_env, { path: "/root/local/ruby-1.9.3-p448:$PATH" }
 set :keep_releases, 5
 
 namespace :deploy do
@@ -36,6 +35,7 @@ namespace :deploy do
   end
 
   after :updating, 'frontend:compile'
+  after :updating, 'backend:build'
   after :finishing, 'deploy:cleanup'
 
 end
@@ -43,8 +43,16 @@ end
 namespace :frontend do
   task :compile do
     on roles(:all) do |h|
-      execute "cd #{release_path}/frontend; npm install ; brunch build"
-      execute "ln -s #{release_path}/frontend/public #{release_path}/public"
+      execute "rm -rf #{release_path}/backend/public; ln -s #{release_path}/frontend #{release_path}/backend/public"
+    end
+  end
+end
+
+namespace :backend do
+  task :build do
+    on roles(:all) do |h|
+      execute "ln -s #{shared_path}/config/database.yml #{release_path}/backend/config/database.yml"
+      execute "cd #{release_path}/backend; bundle install --without='development test'; RAILS_ENV=#{fetch(:stage)} rake db:migrate"
     end
   end
 end
