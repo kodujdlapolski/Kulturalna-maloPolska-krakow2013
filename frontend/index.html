@@ -121,6 +121,14 @@
             }
 
             this.search = function () {
+				var location;
+				geo.getLocation().then(function (data) {
+					location = data;
+					alert(location);
+				});
+					
+				
+					
                 $.ajax({
                     url: 'data.json',
                     dataType: 'json'
@@ -129,7 +137,7 @@
 
                 }).always(function (d) { console.log(d); });
 
-
+				
                 //do ajax request,
 
             }

@@ -1,7 +1,7 @@
 class Api::V1::MonumentsController < ApplicationController
   def index
-    if params.include? :range
-        out = Monument.close_to(20, 49, 50000)
+    if params.slice(:lng, :lat, :range).size == 3
+        out = Monument.close_to(params[:lng], params[:lat], params[:range])
     else
         out = Monument.all
     end
