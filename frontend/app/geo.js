@@ -1,11 +1,14 @@
 var geo = function () {
 
     var map,
+        geocoder,
         showLocation = function () {
                  navigator.geolocation.getCurrentPosition(callback);
         },
         init = function (mp) {
             map = mp;
+            geocoder = new google.maps.Geocoder();
+
         },
     callback = function (position) {
         var lat = position.coords.latitude;
@@ -13,14 +16,8 @@ var geo = function () {
         codeLatLng(lat, lng).then(function (data) {
             document.getElementById('location-a').value = data;
         });
-
-        var mapOptions = {
-            zoom: 8,
-            center: new google.maps.LatLng(lat, lng),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
+        map.setZoom(14);
+        map.setCenter(new google.maps.LatLng(lat, lng));
 
     }
 
