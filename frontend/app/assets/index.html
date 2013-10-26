@@ -66,7 +66,7 @@
                         <button type="button" data-bind="click:setStart" class="btn btn-default" title="Wstaw startową lokalizacje z GPS"><span class="glyphicon glyphicon-globe"></span></button>
                         <label> w promieniu : </label>
                         <div class="form-group ">
-                                <input type="text" class="form-control" placeholder="km">
+                            <input type="number" class="form-control" data-bind="value:radius" placeholder="km">
                         </div>
                         <button type="submit" data-bind="click:search" class="btn btn-default">Szukaj</button>
                     </form>
@@ -115,18 +115,19 @@
             this.firstName = "Bert";
             this.lastName = "Bertington";
             this.startLocalization = ko.observable();
-            this.endLocalization = ko.observable();
+            this.radius = ko.observable();
             this.setStart = function (v) {
                 this.startLocalization(geo.showLocation());
             }
 
             this.search = function () {
+                var self = this;
                 $.ajax({
                     url: 'data.json',
+                    data: { loc: self.startLocalization(), radius: self.radius() },
                     dataType: 'json'
                 }).done(function (data) {
                     gMap.setMarkers(data);
-
                 }).always(function (d) { console.log(d); });
 
 
