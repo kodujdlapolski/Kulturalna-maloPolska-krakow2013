@@ -1,3 +1,5 @@
 */node_modules
 frontend/public
 backend/config/database.yml
+backend/log/*
+backend/tmp/*
