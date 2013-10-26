@@ -8,6 +8,8 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
     <script src="../geo.js"></script>
+    <script src="../q.js"></script>
+
 
     <title>Theme Template for Bootstrap</title>
 
@@ -125,6 +127,9 @@
     </script>
     <script>
 
+		$(function(){ 
+			geocoder = new google.maps.Geocoder();
+		});
     
         function SearchViewModel() {
             this.firstName = "Bert";
@@ -132,10 +137,10 @@
             this.startLocalization = ko.observable();
             this.endLocalization = ko.observable();
             this.setStart = function (v) {
-                this.startLocalization(showLocationA());
+                this.startLocalization(showLocation());
             }
             this.endStart = function (v) {
-                this.endLocalization(showLocationB());
+                this.endLocalization();
             }
             var getLocalization = function () {
 

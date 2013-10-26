@@ -1,15 +1,43 @@
-function showLocationA() {
-   navigator.geolocation.getCurrentPosition(callbackA);
-}
-
-function showLocationB() {
-   navigator.geolocation.getCurrentPosition(callbackB);
+function showLocation() 
+{
+	navigator.geolocation.getCurrentPosition(callback);
 }
  
-function callbackA(position) {
-   document.getElementById('location-a').value = position.coords.latitude +";"+ position.coords.longitude; 
+function callback(position) 
+{
+	var lat = position.coords.latitude;
+	var lng = position.coords.longitude
+	codeLatLng(lat, lng).then(function(data){
+		document.getElementById('location-a').value = data; 
+	});
+	
 }
 
-function callbackB(position) {
-   document.getElementById('location-b').value = position.coords.latitude +";"+ position.coords.longitude; 
+function codeLatLng(lat, lng) 
+{
+	var address = "test";
+    var latlng = new google.maps.LatLng(lat, lng);
+    var defer = Q.defer();
+    
+    geocoder.geocode({'latLng': latlng}, function(results, status) 
+    {
+		if (status == google.maps.GeocoderStatus.OK) 
+		{
+			console.log(results)
+			if (results[1]) 
+			{	
+				defer.resolve(results[0].formatted_address)
+			} 
+			else 
+			{
+				alert("No results found");
+			}
+		} 
+		else 
+		{
+        alert("Geocoder failed due to: " + status);
+		}
+	});
+
+	return defer.promise;
 }
