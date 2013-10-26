@@ -56,15 +56,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-                    <form class="navbar-form navbar-left" role="search">
-                        <label> Zasięg: </label>
-                        <div class="form-group ">
-                            <div class="col-lg-4">
-                                <input type="text" class="form-control" placeholder="km">
-                            </div>
-                        </div>
-
-                    </form>
+        
 
                     <form class="navbar-form navbar-right" role="search">
                         <label> Startuje z: </label>
@@ -72,13 +64,10 @@
                             <input type="text" id="location-a" class="form-control" placeholder="Wpisz swoją aktualizację">
                         </div>
                         <button type="button" data-bind="click:setStart" class="btn btn-default" title="Wstaw startową lokalizacje z GPS"><span class="glyphicon glyphicon-globe"></span></button>
-
-                        <label> Kończe w : </label>
-                        <div class="form-group">
-                            <input type="text" id="location-b" class="form-control" placeholder="Wpisz swoją aktualizację">
+                        <label> w promieniu : </label>
+                        <div class="form-group ">
+                                <input type="text" class="form-control" placeholder="km">
                         </div>
-                        <button type="button" data-bind="click:endStart" class="btn btn-default" title="Wstaw startową lokalizacje z GPS"><span class="glyphicon glyphicon-globe"></span></button>
-
                         <button type="submit" data-bind="click:search" class="btn btn-default">Szukaj</button>
                     </form>
 
@@ -113,6 +102,7 @@
     <script>
 
         googleMap.init();
+        geo.init(googleMap.map);
 
         $(function () {
             geocoder = new google.maps.Geocoder();
@@ -123,17 +113,15 @@
     <script>
 
 
-        function SearchViewModel(gMap) {
+        function SearchViewModel(gMap, geo) {
             this.firstName = "Bert";
             this.lastName = "Bertington";
             this.startLocalization = ko.observable();
             this.endLocalization = ko.observable();
             this.setStart = function (v) {
-                this.startLocalization(showLocationA());
+                this.startLocalization(geo.showLocation());
             }
-            this.endStart = function (v) {
-                this.endLocalization(showLocationB());
-            }
+
             this.search = function () {
                 $.ajax({
                     url: 'data.json',
@@ -147,13 +135,10 @@
                 //do ajax request,
 
             }
-            var getLocalization = function () {
-
-            };
         }
 
         // Activates knockout.js
-        ko.applyBindings(new SearchViewModel(googleMap));
+        ko.applyBindings(new SearchViewModel(googleMap, geo));
     </script>
 </body>
 
