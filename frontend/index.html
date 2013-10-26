@@ -81,6 +81,7 @@ Daj się namierzyć albo napisz, gdzie jestes, żeby zobaczyć, co Małopolska m
             </nav>
         </div>
 
+
         <div class="row">
             <div class="col-lg-12">
                 <div id="map-canvas"></div>
@@ -138,8 +139,8 @@ Daj się namierzyć albo napisz, gdzie jestes, żeby zobaczyć, co Małopolska m
                     .then(function (location) {					
 
 					    $.ajax({
-					     //   url: 'data.json',
-					        url: '/api/v1/monuments/?lat=' + location.lb + '&lng=' + location.mb + '&range=' + self.range(),
+					      //  url: 'data.json',
+					     url: '/api/v1/monuments/?lat=' + location.lb + '&lng=' + location.mb + '&range=' + self.radius(),
 
 					        dataType: 'json',
 					       

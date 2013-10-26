@@ -26,7 +26,7 @@ var googleMap = function (q,_) {
             }
         },
         setRadius = function (center, radius) {
-            if (this.circle != undefined)  this.circle.setMap(null);
+            if (this.circle != undefined) this.circle.setMap(null);
             var km = 100;
             var center = new google.maps.LatLng(center.lb, center.mb);
             var circleOptions = {
@@ -44,6 +44,7 @@ var googleMap = function (q,_) {
         setMarkers = function (locations) {
             clearMarkers();
             this.markers = [];
+            var self = this;
 
             var infowindow = new google.maps.InfoWindow();
             for (var i = 0; i < locations.length; i++) {
@@ -55,13 +56,26 @@ var googleMap = function (q,_) {
                     title: beach.title,
                     zIndex: i
                 });
-                google.maps.event.addListener(marker, 'click', (function (marker, content) {
+                google.maps.event.addListener(marker, 'click', (function (marker, content, view) {
                     return function () {
-                        infowindow.setContent(content);
+
+                        infowindow.setContent(view(content));
                         infowindow.open(map, marker);
                     }
-                })(marker, beach.description));
-               this.markers.push(marker);
+                })(marker, beach, function (obj) {
+                    return '<div><h4 >{{title}}</h4><span><b>Obiekt do zwiedzania: </b>{{availablity}} |<b> Autor:</b> {{author}}</span>        <div>            <br />        <span>{{description}}</span>            <br />        <span>{{guardian}}</span>        </div>        <span><b>Kontakt :</b> {{address}}, <b>tel: {{phone}}</b>, email: <a href="{{email}}">{{email}}</a></span>        <div>            <span>url: <a href="{{url}}" target="_blank">{{url}}</a></span>        </div>'
+                    .replace("{{title}}", obj.title)
+                                    .replace("{{author}}", obj.author)
+                                    .replace(new RegExp("{{email}}", 'g'), obj.email||"")
+                                    .replace("{{phone}}", obj.phone||"")
+                                    .replace(new RegExp("{{url}}", 'g'), obj.url || "")
+                                    .replace("{{address}}", obj.address)
+                                    .replace("{{guardian}}", obj.guardian)
+                                    .replace("{{description}}", obj.description)
+                                    .replace("{{availablity}}", obj.availablity);
+
+                }));
+                this.markers.push(marker);
             }
         },
             init = function () {
@@ -80,8 +94,7 @@ var googleMap = function (q,_) {
 
                 google.maps.event.addDomListener(window, 'load', initialize);
                 return deferred.promise;
-            }
-
+            };
 
 
     return {
