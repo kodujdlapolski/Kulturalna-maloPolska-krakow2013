@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -61,7 +60,7 @@ CREATE TABLE monuments (
     url character varying(255),
     notices text,
     lat numeric(15,10),
-    lng numeric,
+    lng numeric(15,10),
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -100,6 +99,14 @@ CREATE TABLE schema_migrations (
 --
 
 ALTER TABLE ONLY monuments ALTER COLUMN id SET DEFAULT nextval('monuments_id_seq'::regclass);
+
+
+--
+-- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM stdin;
+\.
 
 
 --
