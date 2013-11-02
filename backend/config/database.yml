@@ -13,6 +13,7 @@ development:
   encoding: unicode
   database: test-postgres_development
   pool: 5
+  template: template0
   username: postgres
   password:
  
@@ -39,6 +40,7 @@ test:
   encoding: unicode
   database: test
   pool: 5
+  template: template0
   username: postgres
   password:
  
@@ -47,5 +49,6 @@ production:
   encoding: unicode
   database: test
   pool: 5
+  template: template0
   username: postgres
   password:
