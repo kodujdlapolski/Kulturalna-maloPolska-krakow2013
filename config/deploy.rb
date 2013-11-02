@@ -52,7 +52,7 @@ namespace :backend do
   task :build do
     on roles(:all) do |h|
       execute "ln -s #{shared_path}/config/database.yml #{release_path}/backend/config/database.yml"
-      execute "cd #{release_path}/backend; bundle install --without='development test'; RAILS_ENV=#{fetch(:stage)} rake db:migrate"
+      execute "cd #{release_path}/backend; bundle install --without='development test'; RAILS_ENV=#{fetch(:stage)} bundle exec rake db:migrate"
     end
   end
 end
