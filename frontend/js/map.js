@@ -34,7 +34,7 @@ var googleMap = function (q,_) {
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
                 fillColor: '#FF0000',
-                fillOpacity: 0.35,
+                fillOpacity: 0.1,
                 map: map,
                 center: center,
                 radius: parseInt(radius, 10) * km
