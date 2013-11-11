@@ -140,7 +140,7 @@ Daj się namierzyć albo napisz, gdzie jestes, żeby zobaczyć, co Małopolska m
 
 					    $.ajax({
 					      //  url: 'data.json',
-					     url: '/api/v1/monuments/?lat=' + location.lb + '&lng=' + location.mb + '&range=' + (self.radius()*1000),
+					     url: '/api/v1/monuments/?lat=' + location.lat() + '&lng=' + location.lng() + '&range=' + (self.radius()*1000),
 
 					        dataType: 'json',
 					       
