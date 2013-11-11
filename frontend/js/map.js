@@ -28,7 +28,7 @@ var googleMap = function (q,_) {
         setRadius = function (center, radius) {
             if (this.circle != undefined) this.circle.setMap(null);
             var km = 1000;
-            var center = new google.maps.LatLng(center.lb, center.mb);
+            var center = new google.maps.LatLng(center.lat(), center.lng());
             var circleOptions = {
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,
