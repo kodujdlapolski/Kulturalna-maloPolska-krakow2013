@@ -1,4 +1,0 @@
-zmien.org.pl/kdp
-
-login: kdp@zmien.org.pl
-h: kdp2013
